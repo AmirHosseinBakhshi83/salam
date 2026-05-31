@@ -1,0 +1,951 @@
+
+/* ============================================
+   RESULT DETAIL PAGE STYLES
+   ============================================ */
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1e40af;
+    --primary-light: #3b82f6;
+    --secondary: #10b981;
+    --light-light-gray: #fefefe;
+    --warning: #f59e0b;
+    --dark: #0f172a;
+    --gray: #64748b;
+    --gray-light: #94a3b8;
+    --light-gray: #f1f5f9;
+    --white: #ffffff;
+    --success: #10b981;
+    --error: #ef4444;
+    --info: #3b82f6;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    --radius: 16px;
+}
+
+/* ========== MAIN CONTAINER ========== */
+.single-result-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: var(--white);
+    border-radius: 32px;
+    box-shadow: var(--shadow-xl);
+    overflow: hidden;
+    animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== HEADER ========== */
+.result-header {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    padding: 2rem;
+    color: white;
+    text-align: center;
+}
+
+.result-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.result-title i {
+    font-size: 2.5rem;
+}
+
+.result-title h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.exam-badge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+}
+
+.exam-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.exam-date {
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+/* ========== SUMMARY CARDS ========== */
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.2rem;
+    padding: 1.5rem;
+    background: var(--white);
+}
+
+.summary-card {
+    background: var(--light-gray);
+    border-radius: 20px;
+    padding: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+
+.card-icon {
+    width: 55px;
+    height: 55px;
+    background: rgba(37, 99, 235, 0.1);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    color: var(--primary);
+}
+
+.card-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-label {
+    font-size: 0.75rem;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card-value {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--dark);
+}
+
+.card-value small {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--gray);
+}
+
+.card-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: #e2e8f0;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    border-radius: 2px;
+    transition: width 1s ease;
+}
+
+/* Status card variations */
+.status-card.passed .card-icon {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+}
+
+.status-card.failed .card-icon {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--error);
+}
+
+/* ========== DETAIL STATS ========== */
+.detail-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.2rem;
+    padding: 0 1.5rem 1.5rem;
+}
+
+.stat-item {
+    background: var(--white);
+    border: 1px solid #eef2f8;
+    border-radius: 20px;
+    padding: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.3s;
+}
+
+.stat-item:hover {
+    border-color: var(--primary-light);
+    box-shadow: var(--shadow-sm);
+}
+
+.stat-circle {
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.stat-circle svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.stat-bg {
+    fill: none;
+    stroke: #e2e8f0;
+    stroke-width: 8;
+}
+
+.stat-fill {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 8;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s ease;
+}
+
+.stat-percent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    min-width: 60px;
+    text-align: center;
+}
+
+.stat-number.correct-count {
+    color: var(--success);
+}
+
+.stat-number.wrong-count {
+    color: var(--error);
+}
+
+.stat-number.unanswered-count {
+    color: var(--warning);
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.stat-desc {
+    font-size: 0.7rem;
+    color: var(--gray);
+}
+
+/* ========== QUESTIONS SECTION ========== */
+.questions-section {
+    padding: 1.5rem;
+    border-top: 1px solid #eef2f8;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.section-header h3 {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.legend {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.75rem;
+}
+
+.legend-correct {
+    color: var(--success);
+}
+
+.legend-wrong {
+    color: var(--error);
+}
+
+.legend-unanswered {
+    color: var(--gray-light);
+}
+
+.legend span i {
+    margin-left: 0.3rem;
+}
+
+/* Questions Grid */
+.questions-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.question-result-card {
+    background: var(--white);
+    border: 1px solid #eef2f8;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.question-result-card:hover {
+    border-color: #cbd5e1;
+    box-shadow: var(--shadow-sm);
+}
+
+.question-result-card.correct {
+    border-right: 4px solid var(--success);
+}
+
+.question-result-card.wrong {
+    border-right: 4px solid var(--error);
+}
+
+.question-result-card.unanswered {
+    border-right: 4px solid var(--warning);
+}
+
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem 1.2rem;
+    background: var(--light-gray);
+}
+
+.question-number {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.question-status {
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.question-result-card.correct .question-status {
+    color: var(--success);
+}
+
+.question-result-card.wrong .question-status {
+    color: var(--error);
+}
+
+.question-result-card.unanswered .question-status {
+    color: var(--warning);
+}
+
+.question-score {
+    font-size: 0.9rem;
+}
+
+.score-value {
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.score-max {
+    color: var(--gray);
+}
+
+.question-body {
+    padding: 1.2rem;
+}
+
+.question-text {
+    margin-bottom: 1rem;
+}
+
+.question-text strong {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--gray);
+}
+
+.question-text p {
+    line-height: 1.6;
+    color: var(--dark);
+}
+
+.answer-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed #eef2f8;
+}
+
+.user-answer, .correct-answer, .explanation {
+    font-size: 0.9rem;
+}
+
+.user-answer strong, .correct-answer strong, .explanation strong {
+    display: inline-block;
+    margin-left: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--gray);
+}
+
+.user-answer span {
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.user-answer .unanswered-text {
+    color: var(--warning);
+    font-style: italic;
+}
+
+.correct-answer span {
+    color: var(--success);
+    font-weight: 600;
+}
+
+.explanation {
+    background: #fef3c7;
+    padding: 0.8rem;
+    border-radius: 12px;
+    margin-top: 0.5rem;
+}
+
+.explanation p {
+    margin-top: 0.3rem;
+    color: #92400e;
+    font-size: 0.85rem;
+}
+
+/* ========== ACTION BUTTONS ========== */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: var(--light-gray);
+    border-top: 1px solid #eef2f8;
+    flex-wrap: wrap;
+}
+
+.action-buttons a, .action-buttons button {
+    padding: 0.7rem 1.5rem;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+    font-family: inherit;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+    background: var(--white);
+    color: var(--dark);
+    border: 1px solid #e2e8f0;
+}
+
+.btn-secondary:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--gray);
+    border: 1px solid #cbd5e1;
+}
+
+.btn-outline:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+
+/* ========== PRINT STYLES ========== */
+@media print {
+    body {
+        background: white;
+        padding: 0;
+    }
+    
+    .result-container {
+        box-shadow: none;
+        border-radius: 0;
+    }
+    
+    .action-buttons {
+        display: none;
+    }
+    
+    .summary-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+    
+    .question-result-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+}
+
+/* جایگزین کد قبلی tf-cell با این */
+.tf-cell {
+    display: inline-flex;  /* تغییر از flex به inline-flex */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 40px;  /* کاهش عرض */
+    padding: 0.3rem 0.3rem;  /* کاهش padding */
+    text-align: center;
+    flex-shrink: 0;  /* جلوگیری از جمع شدن */
+}
+
+.tf-row {
+    display: flex;
+    gap: 0.3rem;  /* کاهش فاصله برای زوم */
+    justify-content: flex-start;
+    flex-wrap: wrap;  /* اضافه شدن برای زوم بالا */
+}
+
+.tf-grid-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    order: 1;
+    overflow-x: auto;  /* اسکرول افقی در صورت نیاز */
+    min-width: 0;  /* برای flexbox */
+}
+
+
+/* استایل مخصوص جدول True/False با ۵ ستون */
+.tf-table-container {
+    overflow-x: auto;
+}
+
+.tf-mini-table {
+    display: inline-table;
+    border-collapse: collapse;
+}
+
+.tf-mini-table td {
+    padding: 4px 8px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+}
+
+.tf-mini-table .tf-header {
+    background: #f1f5f9;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+
+/* ============================================
+   ANSWERS TABLE STYLES
+   ============================================ */
+
+.answers-table-wrapper {
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eef2f8;
+}
+
+.answers-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Inter', sans-serif;
+    min-width: 800px;
+    direction: rtl;
+}
+
+/* Header Styles */
+.answers-table th {
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    padding: 1rem 0.8rem;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: #1e293b;
+    border-bottom: 2px solid #e2e8f0;
+    white-space: nowrap;
+}
+
+/* Cell Styles */
+.answers-table td {
+    padding: 1rem 0.8rem;
+    text-align: center;
+    border-bottom: 1px solid #e6e6e6;
+    vertical-align: middle;
+}
+
+/* Question Row Hover */
+.answers-table tbody tr:hover {
+    background-color: #fafcff;
+    transition: background 0.2s;
+}
+
+/* ========== شماره سوال ========== */
+.question-number-cell {
+    font-weight: 700;
+    color: #100e92;
+    width: 60px;
+    background: var(--light-light-gray);
+}
+
+
+/* ========== پاسخ کاربر ========== */
+.user-answer {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+/* سبز - پاسخ صحیح کاربر */
+.user-answer.correct-answer {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+/* قرمز - پاسخ غلط کاربر */
+.user-answer.wrong-answer {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+/* ========== پاسخ صحیح (زرد) ========== */
+.correct-answer-cell {
+    background: var(--light-gray);
+    border-radius: 0;
+}
+
+.correct-answer-value {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    background: var(--light-light-gray);
+    color: #100e92;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+/* ========== True/False Grid درون سلول ========== */
+.tf-user-answers,
+.tf-correct-answers {
+    display: inline-flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.tf-answer-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    min-width: 55px;
+}
+
+.tf-label {
+    font-size: 0.6rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.tf-user-value,
+.tf-correct-value {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    min-width: 45px;
+    text-align: center;
+}
+
+/* پاسخ صحیح کاربر در TF (سبز) */
+.tf-user-value.tf-correct {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+/* پاسخ غلط کاربر در TF (قرمز) */
+.tf-user-value.tf-wrong {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+/* پاسخ خالی */
+.tf-user-value.tf-empty {
+    background: #f1f5f9;
+    color: #94a3b8;
+}
+
+/* پاسخ صحیح استاندارد (زرد) */
+.tf-correct-value {
+    background: #f7fafe;
+    color: #100e92;
+}
+
+/* ========== وضعیت ========== */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.7rem;
+    border-radius: 30px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.status-badge i {
+    font-size: 0.7rem;
+}
+
+.status-correct {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.status-wrong {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.status-unanswered {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+/* ========== امتیاز ========== */
+.score-cell {
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.score-earned {
+    color: #2563eb;
+    font-size: 1rem;
+}
+
+.score-separator {
+    color: #cbd5e1;
+    margin: 0 0.2rem;
+}
+
+.score-max {
+    color: #94a3b8;
+    font-size: 0.8rem;
+}
+
+/* ========== کلاس‌های ردیف ========== */
+.row-correct {
+    background-color: rgba(16, 185, 129, 0.03);
+}
+
+.row-wrong {
+    background-color: rgba(239, 68, 68, 0.02);
+}
+
+/* ========== حالت خالی ========== */
+.empty-row {
+    text-align: center;
+    padding: 3rem !important;
+    color: #94a3b8;
+}
+
+.empty-row i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.empty-row p {
+    font-size: 0.85rem;
+}
+
+/* ========== پاسخ عددی و تستی ========== */
+.numeric-answer,
+.choice-answer {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 768px) {
+    .answers-table-wrapper {
+        margin: 1rem 0;
+    }
+    
+    .answers-table th,
+    .answers-table td {
+        padding: 0.6rem 0.4rem;
+        font-size: 0.75rem;
+    }
+    
+    .tf-answer-item {
+        min-width: 40px;
+    }
+    
+    .tf-user-value,
+    .tf-correct-value {
+        min-width: 35px;
+        font-size: 0.6rem;
+    }
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+    
+    .result-header {
+        padding: 1.5rem;
+    }
+    
+    .result-title h1 {
+        font-size: 1.4rem;
+    }
+    
+    .summary-cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+        padding: 1rem;
+    }
+    
+    .summary-card {
+        padding: 0.8rem;
+    }
+    
+    .card-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+    }
+    
+    .card-value {
+        font-size: 1.2rem;
+    }
+    
+    .detail-stats {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 0 1rem 1rem;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .question-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .action-buttons a, .action-buttons button {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .summary-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .detail-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .stat-circle {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+        min-width: 50px;
+    }
+}

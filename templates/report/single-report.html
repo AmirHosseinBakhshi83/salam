@@ -1,0 +1,259 @@
+{% extends 'dashboard-main.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block content %}
+<aside class="right-sidebar">
+    <div class="sidebar-menu">
+        <div class="sidebar-menu">
+            <div class="sidebar-item" data-tab="exams">
+                <a href="{% url 'dashboard:dashboard' %}" class="my-link">
+                    <span class="item-text">آزمون‌های من</span>
+                </a>
+            </div>
+
+            <div class="sidebar-item-active" data-tab="results">
+                <a href="{% url 'report:total' %}" class="my-link">
+                    <span class="item-text">کارنامه</span>
+                </a>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <div class="sidebar-item" data-tab="exams">
+                <a href="{% url 'personal:profile' %}" class="my-link">
+                    <span class="item-text">پروفایل</span>
+                </a>
+            </div>
+
+            <div class="sidebar-item" data-tab="results">
+                <a href="{% url 'dashboard:dashboard' %}" class="my-link">
+                    <span class="item-text">راهنما</span>
+                </a>
+            </div>
+        </div>
+        <!-- آمار کاربر در سایدبار -->
+        <div class="sidebar-stats">
+            <div class="stat-card">
+                <i class="fas fa-check-circle"></i>
+                <div class="stat-info">
+                    <span class="stat-value" id="completedExams">0</span>
+                    <span class="stat-label">آزمون کامل شده</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-hourglass-half"></i>
+                <div class="stat-info">
+                    <span class="stat-value" id="pendingExams">0</span>
+                    <span class="stat-label">در انتظار</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-star"></i>
+                <div class="stat-info">
+                    <span class="stat-value" id="avgScore">0</span>
+                    <span class="stat-label">میانگین نمره</span>
+                </div>
+            </div>
+        </div>
+</aside>
+<main class="content-area">
+    <div class="single-result-container">
+        <!-- هدر کارنامه -->
+        <div class="result-header">
+            <div class="result-title">
+                <i class="fas fa-award"></i>
+                <h1>کارنامه آزمون</h1>
+            </div>
+            <div class="exam-badge">
+                <span class="exam-name">{{ user_exam.exam.title }}</span>
+            </div>
+        </div>
+
+        <!-- خلاصه نتایج -->
+        <div class="summary-cards">
+            <div class="summary-card score-card">
+                <div class="card-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="card-info">
+                    <span class="card-label">نمره نهایی</span>
+                    <span class="card-value">{{ user_exam.score}} <small>از {{ user_exam.total_possible_score}}</small></span>
+                </div>
+                <div class="card-progress">
+                    <div class="progress-bar"></div>
+                </div>
+            </div>
+
+
+            <div class="summary-card rank-card">
+                <div class="card-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="card-info">
+                    <span class="card-label">رتبه</span>
+                    <span class="card-value">{{ result.rank|default:"--" }}</span>
+                </div>
+            </div>
+
+            <div class="summary-card time-card">
+                <div class="card-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="card-info">
+                    <span class="card-label">زمان آزمون</span>
+                    <span class="card-value">{{ user_exam.exam.duration_lenght|default:"--" }}<small>دقیقه</small></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- آمار جزئی -->
+        <div id="myDiv" class="detail-stats">
+            <div class="stat-item">
+                <div class="stat-circle">
+                    <svg viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="45" class="stat-bg"></circle>
+                        <circle cx="50" cy="50" r="45" class="stat-fill"></circle>
+                    </svg>
+                    <div class="stat-percent">{{ user_exam.percentage_score }}%</div>
+                </div>
+                <div class="stat-info">
+                    <span class="stat-label">درصد شما</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number correct-count">
+                    {{ correct_count }}
+                </div>
+                <div class="stat-info">
+                    <span class="stat-label">پاسخ صحیح</span>
+                    <span class="stat-desc">از {{ total_questions }} سوال</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number wrong-count">
+                    {{ wrong_count }}
+                </div>
+                <div class="stat-info">
+                    <span class="stat-label">پاسخ غلط</span>
+                    <span class="stat-desc">از {{ total_questions }} سوال</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number unanswered-count">
+                    {{ unanswered_count }}
+                </div>
+                <div class="stat-info">
+                    <span class="stat-label">بی‌پاسخ</span>
+                    <span class="stat-desc">از {{ total_questions }} سوال</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- جدول تفکیکی سوالات -->
+        <div class="questions-section">
+            <div class="section-header">
+                <h3><i class="fas fa-list-ul"></i> پاسخ‌های ثبت شده</h3>
+                <div class="legend">
+                    <span class="legend-correct"><i class="fas fa-check-circle"></i> صحیح</span>
+                    <span class="legend-wrong"><i class="fas fa-times-circle"></i> غلط</span>
+                    <span class="legend-unanswered"><i class="fas fa-minus-circle"></i> بی‌پاسخ</span>
+                </div>
+            </div>
+            <div class="answers-table-wrapper">
+                <table class="answers-table">
+                    <thead>
+                        <tr>
+                            <th>شماره سوال</th>
+                            <th>پاسخ‌ شما</th>
+                            <th>کلید</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item, detail in site_answer.items %}
+                        <tr class="question-row ">
+                            <!-- شماره سوال -->
+                            <td class="question-number-cell">{{ item }}</td>
+
+                            <!-- پاسخ کاربر -->
+                            <td class="user-answer-cell">
+                                {% if detail.question_type == 'numeric' %}
+                                <span class="tf-user-value {% if not value.is_answered %}tf-empty{% elif value.is_correct %}tf-correct{% else %}tf-wrong{% endif %}">
+                                    {% if detail.reza.user_answer == 'None'%}
+                                    -
+                                    {% else %}
+                                    {{ detail.reza.user_answer|default:"پاسخ داده نشده" }}
+                                    {% endif %}
+                                </span>
+
+                                {% elif detail.question_type == 'multi_choice' %}
+                                <span class="tf-user-value {% if not value.is_answered %}tf-empty{% elif value.is_correct %}tf-correct{% else %}tf-wrong{% endif %}">
+                                    گزینه {{ detail.reza.user_answer|default:"-" }}
+                                </span>
+
+                                {% elif detail.question_type == 'true_false_set' %}
+                                <div class="tf-user-answers">
+                                    {% for value in detail.combined_answers %}
+                                    <div class="tf-answer-item">
+                                        <span class="tf-label">{{value.letter}}</span>
+                                        <span
+                                            class="tf-user-value {% if not value.is_answered %}tf-empty{% elif value.is_correct %}tf-correct{% else %}tf-wrong{% endif %}">
+                                            {% if not value.is_answered  %}
+                                            -
+                                            {% elif value.user_answer == 'T' %}
+                                            صحیح
+                                            {% elif value.user_answer == 'F' %}
+                                            غلط
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </td>
+
+                            <!-- پاسخ صحیح -->
+                            <td class="correct-answer-cell">
+                                {% if detail.question_type == 'numeric' %}
+                                <span class="correct-answer-value">{{ detail.reza.q_answer|default:"-" }}</span>
+
+                                {% elif detail.question_type == 'multi_choice' %}
+                                <span class="correct-answer-value">گزینه {{ detail.reza.q_answer|default:"-" }}</span>
+
+                                {% elif detail.question_type == 'true_false_set' %}
+                                <div class="tf-correct-answers">
+                                    {% for value in detail.combined_answers%}
+                                    <div class="tf-answer-item">
+                                        <span class="tf-label">{{value.letter}}</span>
+                                        <span class="tf-correct-value">
+                                            {% if value.q_answer == 'T' %}صحیح{% elif value.q_answer == 'F' %}غلط{% elif  value.q_answer == 'B' %}ص/غ{% endif %}
+                                        </span>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- دکمه‌های اقدام  -->
+        <div class="action-buttons">
+            <a href="{% url 'dashboard:dashboard' %}" class="btn-secondary">
+                <i class="fas fa-arrow-right"></i> بازگشت به داشبورد
+            </a>
+            <a href="{% url 'exam:pdf_view' exam_id=user_exam.exam_id %}" class="btn-primary">
+            سوالات
+            </a>
+            <a href="{% url 'exam:answer_view' exam_id=user_exam.exam_id %}" class="btn-primary">
+            پاسخنامه
+            </a>
+            <button class="btn-outline" onclick="printDiv('myDiv')">
+                <i class="fas fa-print"></i> چاپ کارنامه
+            </button>
+        </div>
+
+    </div>
+</main>
+{% endblock %}

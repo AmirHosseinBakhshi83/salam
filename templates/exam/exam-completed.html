@@ -1,0 +1,460 @@
+
+
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>آزمون با موفقیت کامل شد | سامانه آزمون‌های من</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ============================================
+           EXAM COMPLETED PAGE STYLES
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --primary-light: #3b82f6;
+            --secondary: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #0f172a;
+            --gray: #64748b;
+            --gray-light: #94a3b8;
+            --light-gray: #f1f5f9;
+            --white: #ffffff;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fc 0%, #eef2f8 100%);
+            color: var(--dark);
+            direction: rtl;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        /* ========== MAIN CONTAINER ========== */
+        .completed-container {
+            max-width: 650px;
+            width: 100%;
+            margin: 0 auto;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes checkmark {
+            0% {
+                stroke-dashoffset: 100;
+            }
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        /* ========== کارت اصلی ========== */
+        .success-card {
+            background: var(--white);
+            border-radius: 32px;
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* هدر کارت */
+        .success-header {
+            background: linear-gradient(135deg, var(--secondary), #059669);
+            padding: 2rem;
+            color: white;
+            position: relative;
+        }
+
+        /* انیمیشن چک مارک */
+        .checkmark-wrapper {
+            margin-bottom: 1rem;
+        }
+
+        .checkmark-circle {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            animation: scaleIn 0.5s ease;
+        }
+
+        .checkmark-svg {
+            width: 50px;
+            height: 50px;
+        }
+
+        .checkmark-svg circle {
+            fill: none;
+            stroke: white;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: checkmark 0.8s ease forwards 0.2s;
+        }
+
+        .checkmark-svg polyline {
+            fill: none;
+            stroke: white;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 50;
+            stroke-dashoffset: 50;
+            animation: checkmark 0.5s ease forwards 0.6s;
+        }
+
+        .success-header h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .success-header p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        /* ========== محتوای کارت ========== */
+        .success-body {
+            padding: 2rem;
+        }
+
+        /* پیام تبریک */
+        .congrats-message {
+            margin-bottom: 2rem;
+        }
+
+        .congrats-message h2 {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .congrats-message p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* کارت امتیاز */
+        .score-card {
+            background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+            border-radius: 24px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .score-label {
+            font-size: 0.8rem;
+            color: var(--primary-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .score-value small {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--gray);
+        }
+
+        .score-percentage {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* نوار پیشرفت */
+        .progress-wrapper {
+            margin-top: 1rem;
+        }
+
+        .progress-bar-bg {
+            background: #e2e8f0;
+            border-radius: 30px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            height: 100%;
+            border-radius: 30px;
+            width: 0%;
+            transition: width 1s ease;
+        }
+
+        /* کارت جزئیات */
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-item {
+            background: var(--light-gray);
+            border-radius: 16px;
+            padding: 0.8rem;
+        }
+
+        .detail-label {
+            font-size: 0.7rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-top: 0.2rem;
+        }
+
+        .detail-value.correct {
+            color: var(--secondary);
+        }
+
+        .detail-value.wrong {
+            color: var(--danger);
+        }
+
+        .detail-value.neutral {
+            color: var(--warning);
+        }
+
+        /* پیام تشویقی */
+        .encouragement-box {
+            background: #fef3c7;
+            border-radius: 16px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-align: right;
+        }
+
+        .encouragement-box i {
+            font-size: 2rem;
+            color: #d97706;
+        }
+
+        .encouragement-text {
+            flex: 1;
+        }
+
+        .encouragement-text h4 {
+            font-size: 0.9rem;
+            color: #92400e;
+            margin-bottom: 0.2rem;
+        }
+
+        .encouragement-text p {
+            font-size: 0.75rem;
+            color: #78350f;
+        }
+
+        /* دکمه‌های اقدام */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            border: 1px solid #e2e8f0;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            color: var(--gray);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* ========== اسنک بار ========== */
+        .snackbar {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--dark);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            z-index: 1100;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+        }
+
+        .snackbar.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 550px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .success-header h1 {
+                font-size: 1.2rem;
+            }
+            
+            .success-body {
+                padding: 1.5rem;
+            }
+            
+            .score-value {
+                font-size: 2.2rem;
+            }
+            
+            .details-grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn-primary, .btn-secondary {
+                justify-content: center;
+            }
+            
+            .encouragement-box {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="completed-container">
+    <div class="success-card">
+        <!-- هدر -->
+        <div class="success-header">
+            <div class="checkmark-wrapper">
+                <div class="checkmark-circle">
+                    <svg class="checkmark-svg" viewBox="0 0 52 52">
+                        <circle cx="26" cy="26" r="25" />
+                        <polyline points="14,27 23,36 38,17" />
+                    </svg>
+                </div>
+            </div>
+            <h1>آزمون با موفقیت کامل شد!</h1>
+            <p>پاسخ‌های شما با موفقیت ثبت و ذخیره شد</p>
+        </div>
+
+        <!-- محتوا -->
+        <div class="success-body">
+
+
+            <!-- دکمه‌های اقدام -->
+            <div class="action-buttons">
+                <a href="{% url 'dashboard:dashboard' %}" class="btn-secondary">
+                    <i class="fas fa-home"></i> بازگشت به داشبورد
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- اسنک بار -->
+<div id="snackbar" class="snackbar"></div>
+
+
+</body>
+</html>

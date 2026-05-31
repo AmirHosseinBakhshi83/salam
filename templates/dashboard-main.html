@@ -1,0 +1,63 @@
+{% load static %}
+<!doctype html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>داشبورد</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/single-report.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard-exam-detail.css' %}">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- هدر داشبورد -->
+        <header class="dashboard-header">
+            <div class="header-right">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="logo-text">
+                    <h2>سامانه آزمون</h2>
+                    <span>پنل کاربری</span>
+                </div>
+            </div>
+            <div class="header-left">
+                <span class="user-welcome">خوش آمدی</span>
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-details">
+                        <span class="user-name" id="userName">{{request.user.username}}</span>
+                    </div>
+                </div>
+                <a href="{% url 'accounts:logout' %}" class="my-link">
+                <button id="logoutBtn" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>خروج</span>
+                </button>
+            </a>
+            </div>
+        </header>
+
+        <div class="main-layout">
+            {% block content%}
+
+
+            {% endblock%}
+        </div>
+    </div>
+
+
+
+    <script src="{% static 'js/dashboard.js' %}"></script>
+</body>
+
+</html>

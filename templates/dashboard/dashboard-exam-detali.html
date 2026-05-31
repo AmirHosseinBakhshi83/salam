@@ -1,0 +1,185 @@
+{% extends 'dashboard-main.html' %}
+{% load static %}
+{% block content %}
+<aside class="right-sidebar">
+    <div class="sidebar-menu">
+        <div class="sidebar-menu">
+            <div class="sidebar-item-active" data-tab="exams">
+                <a href="{% url 'dashboard:dashboard' %}" class="my-link">
+                    <span class="item-text">آزمون‌های من</span>
+                </a>
+            </div>
+            <div class="sidebar-item" data-tab="results">
+                <a href="{% url 'report:total' %}" class="my-link">
+                    <span class="item-text">کارنامه</span>
+                </a>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <div class="sidebar-item" data-tab="exams">
+                <a href="{% url 'personal:profile' %}" class="my-link">
+                    <span class="item-text">پروفایل</span>
+                </a>
+            </div>
+            <div class="sidebar-item" data-tab="results">
+                <a href="{% url 'dashboard:dashboard' %}" class="my-link">
+                    <span class="item-text">راهنما</span>
+                </a>
+            </div>
+        </div>
+        <!-- آمار کاربر در سایدبار -->
+        <div class="sidebar-stats">
+            <div class="stat-card">
+                <i class="fas fa-check-circle"></i>
+                <div class="stat-info">
+                    <span class="stat-value" id="completedExams">0</span>
+                    <span class="stat-label">آزمون کامل شده</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-hourglass-half"></i>
+                <div class="stat-info">
+                    <span class="stat-value" id="pendingExams">0</span>
+                    <span class="stat-label">در انتظار</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-star"></i>
+                <div class="stat-info">
+                    <span class="stat-value" id="avgScore">0</span>
+                    <span class="stat-label">میانگین نمره</span>
+                </div>
+            </div>
+        </div>
+</aside>
+<main class="content-area">
+    <div class="exam-info-container">
+        <div class="exam-card">
+            <!-- هدر -->
+            <div class="exam-card-header">
+                <h1 class="exam-title" id="examTitle">{{title}}</h1>
+                <p class="exam-subtitle">اطلاعات آزمون</p>
+            </div>
+            <!-- بدنه -->
+            <div class="exam-card-body">
+                <!-- جدول اطلاعات -->
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">تاریخ شروع</div>
+                            <div class="info-value" id="startDate">{{start_date}}</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">تاریخ پایان</div>
+                            <div class="info-value" id="endDate">{{end_date}}</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-hourglass-half"></i>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">مدت آزمون</div>
+                            <div class="info-value" id="duration">{{duration_lenght}}دقیقه</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">تعداد سوالات</div>
+                            <div class="info-value" id="totalQuestions">{{question_count}}</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">نوع آزمون</div>
+                            <div class="info-value" id="examType">{{type}}</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-flag-checkered"></i>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">وضعیت</div>
+                            <div class="info-value" id="status">
+                                {% if is_complete %}
+                                <span class="status-value status-pending">
+                                    <i class="fas fa-play-circle"></i> تمام شده
+                                </span>
+                                {% elif is_active %}
+                                <span class="status-value status-active">
+                                    <i class="fas fa-play-circle"></i> فعال
+                                </span>
+                                {% else %}
+                                <span class="status-value status-completed">
+                                    <i class="fas fa-play-circle"></i> غیرفعال
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- توضیحات آزمون -->
+                <div class="description-section">
+                    <h4><i class="fas fa-info-circle"></i> توضیحات آزمون</h4>
+                    <p id="description">
+                        این آزمون شامل مباحث ریاضیات پایه شامل: معادلات، توابع، حد و پیوستگی، مشتق و کاربردهای آن
+                        می‌باشد.
+                        سوالات به صورت تستی و تشریحی طراحی شده‌اند. پاسخگویی به تمام سوالات الزامی است.
+                    </p>
+                </div>
+                <!-- قوانین آزمون -->
+                <div class="rules-section">
+                    <h4><i class="fas fa-shield-alt"></i> قوانین و مقررات</h4>
+                    <ul class="rules-list">
+                        <li><i class="fas fa-clock"></i> زمان پاسخگویی محدود بوده و پس از اتمام زمان، آزمون به صورت
+                            خودکار ارسال می‌شود</li>
+                        <li><i class="fas fa-ban"></i> امکان خروج از صفحه آزمون وجود ندارد</li>
+                        <li><i class="fas fa-save"></i> پاسخ‌ها به صورت خودکار ذخیره می‌شوند</li>
+                    </ul>
+                </div>
+                <!-- دکمه‌های اقدام -->
+                <div class="action-buttons">
+                    <a href="{% url 'dashboard:dashboard' %}">
+                        <button class="btn-back" id="backBtn">
+                            <i class="fas fa-arrow-right"></i> بازگشت
+                        </button>
+                    </a>
+                    {% if status%}
+                    <a href="{% url 'report:single' pid=user_exam_id %}">
+                        <button class="btn-result" id="resultBtn">
+                            <i class="fas fa-chart-line"></i> کارنامه
+                        </button>
+                    </a>
+                    <a href="{% url 'exam:public_scoreboard' exam_id=exam_id %}">
+                        <button class="btn-start" id="startExamBtn">
+                        اسکوربورد</button>
+                    </a>
+                    {% endif %}
+                    {% if not is_complete%}
+                    <a href="{% url 'exam:exam_view' exam_id=exam_id %}">
+                        <button class="btn-start" id="startExamBtn">
+                            <i class="fas fa-play"></i> شرکت در آزمون
+                        </button>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock%}

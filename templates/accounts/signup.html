@@ -1,0 +1,170 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>ورود به حساب کاربری | سامانه آزمون‌های من</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="login-container">
+        <!-- بخش سمت راست - فرم ورود -->
+        <div class="login-left">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="logo-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>  
+                    <p>برای ورود به سامانه، اطلاعات حساب خود را وارد کنید</p>
+                </div>
+
+                <form class="login-form" id="loginForm" method="post"  action="{% url 'accounts:login' %}">
+                   {% csrf_token %}
+                    <div class="input-group">
+                        <label for="username">
+                            <i class="fas fa-user"></i>
+                            <span>نام کاربری</span>
+                        </label>
+                        <input type="text"  name="username" placeholder="example@domain.com یا username" autocomplete="off" required>
+                        <div class="input-error" id="usernameError"></div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="username">
+                            <i class="fas fa-user"></i>
+                            <span>شماره تماس</span>
+                        </label>
+                        <input type="text"  name="phone" placeholder="09120000000" autocomplete="off" required>
+                        <div class="input-error" id="usernameError"></div>
+                    </div>
+
+                                        <div class="input-group">
+                        <label for="username">
+                            <i class="fas fa-user"></i>
+                            <span>رمز عبور</span>
+                        </label>
+                        <input type="text"  name="password1" placeholder="********" autocomplete="off" required>
+                        <div class="input-error" id="usernameError"></div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="password">
+                            <i class="fas fa-lock"></i>
+                            <span>تکرار رمز عبور</span>
+                        </label>
+                        <div class="password-wrapper">
+                            <input type="password"  name="password2" placeholder="********" required>
+                            <button type="submit" class="toggle-password" id="togglePassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="input-error" id="passwordError"></div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="remember" id="remember">
+                            <span class="checkmark-custom"></span>
+                            <span>مرا به خاطر بسپار</span>
+                        </label>
+    
+                    </div>
+
+                    <button type="submit" class="btn-login" id="submitBtn">
+                        <span>ورود به سامانه</span>
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+
+                </form>
+
+                <div class="login-footer">
+                    <p>حساب کاربری دارید؟ <a href="{% url 'accounts:login' %}" id="registerLink">ثبت‌نام کنید</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- بخش سمت چپ - اطلاعات و ویژگی‌ها -->
+        <div class="login-right">
+            <div class="hero-content">
+                
+                <div class="hero-badge">
+                    <i class="fas fa-chalkboard-user"></i>
+                    <span>سامانه آنلاین آزمون‌سازی</span>
+                </div>
+                <h2>به سامانه خوش آمدید</h2>
+                <p>پلتفرم پیشرفته برگزاری آزمون‌های آنلاین با امکانات حرفه‌ای</p>
+
+            <!-- اشکال تزئینی -->
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+    </div>
+
+    <!-- مودال فراموشی رمز عبور -->
+    <div id="forgotModal" class="modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3><i class="fas fa-key"></i> بازیابی رمز عبور</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>ایمیل خود را وارد کنید. لینک بازیابی برای شما ارسال می‌شود.</p>
+                <div class="input-group">
+                    <label>آدرس ایمیل</label>
+                    <input type="email" id="resetEmail" placeholder="example@domain.com">
+                </div>
+                <button class="btn-reset" id="resetBtn">ارسال لینک بازیابی</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- اسنک بار برای اعلان‌ها -->
+    <div id="snackbar" class="snackbar"></div>
+
+    <script src="{% static 'js/login.js' %}"></script>
+</body>
+</html>
+
+
+
+
+<!--
+<!DOCTYPE html>
+<html lang="fa" dir="rtl"
+<div class="signup-container">
+    <h2>ثبت نام</h2>
+    <form id="signup-form" action="{% url 'accounts:signup' %}" method="post"> 
+        {% csrf_token %} 
+
+        <div class="form-group">
+            <label for="username">نام کاربری</label>
+            <input type="text" id="username" name="username"  required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">رمز عبور</label>
+            <input type="password" id="password" name="password1"  required minlength="8">
+        </div>
+
+        <div class="form-group">
+            <label for="confirm_password">تأیید رمز عبور</label>
+            <input type="password" id="confirm_password" name="password2"  required minlength="8">
+        </div>
+
+        <button type="submit">ثبت نام</button>
+
+        <div class="footer-text">
+            قبلاً حساب کاربری داشته‌اید؟ <a href="{% url 'accounts:login' %}">ورود</a>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+
+-->

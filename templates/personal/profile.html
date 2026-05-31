@@ -1,0 +1,209 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>پروفایل کاربری</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- هدر داشبورد -->
+        <header class="dashboard-header">
+            <div class="header-right">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="logo-text">
+                    <h2>سامانه آزمون</h2>
+                    <span>پنل کاربری</span>
+                </div>
+            </div>
+            <div class="header-left">
+                <span class="user-welcome">خوش آمدی</span>
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-details">
+                        <span class="user-name" id="userName">{{request.user.username}}</span>
+                    </div>
+                </div>
+                <a href="{% url 'accounts:logout' %}" class="my-link">
+                    <button id="logoutBtn" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>خروج</span>
+                    </button>
+                </a>
+            </div>
+        </header>
+        <div class="main-layout">
+            <aside class="right-sidebar">
+                <div class="sidebar-menu">
+                    <div class="sidebar-menu">
+                        <div class="sidebar-item" data-tab="exams">
+                            <a href="{% url 'dashboard:dashboard' %}" class="my-link">
+                                <span class="item-text">آزمون‌های من</span>
+                            </a>
+                        </div>
+                        <div class="sidebar-item-active" data-tab="results">
+                            <a href="{% url 'report:total' %}" class="my-link">
+                                <span class="item-text">کارنامه</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="sidebar-menu">
+                        <div class="sidebar-item" data-tab="exams">
+                            <a href="{% url 'personal:profile' %}" class="my-link">
+                                <span class="item-text">پروفایل</span>
+                            </a>
+                        </div>
+                        <div class="sidebar-item" data-tab="results">
+                            <a href="{% url 'dashboard:dashboard' %}" class="my-link">
+                                <span class="item-text">راهنما</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="sidebar-stats">
+                        <div class="stat-card">
+                            <i class="fas fa-check-circle"></i>
+                            <div class="stat-info">
+                                <span class="stat-value" id="completedExams">0</span>
+                                <span class="stat-label">آزمون کامل شده</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-hourglass-half"></i>
+                            <div class="stat-info">
+                                <span class="stat-value" id="pendingExams">0</span>
+                                <span class="stat-label">در انتظار</span>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-star"></i>
+                            <div class="stat-info">
+                                <span class="stat-value" id="avgScore">0</span>
+                                <span class="stat-label">میانگین نمره</span>
+                            </div>
+                        </div>
+                    </div>
+            </aside>
+            <div class="profile-container">
+                <!-- هدر پروفایل -->
+                <div class="profile-header">
+                    <div class="profile-header-content">
+                        <div class="profile-avatar">
+                            <div class="avatar-image">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                        </div>
+                        <div class="profile-info">
+                            <h1 id="userFullName">مهدی کریمی</h1>
+                            <span class="user-role">
+                                <i class="fas fa-graduation-cap"></i> دانشجو
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- محتوای اصلی -->
+                <div class="profile-main">
+                    <!-- منوی تب -->
+                    <div class="profile-tabs">
+                        <button class="tab-btn active" data-tab="info">
+                            <i class="fas fa-user"></i> اطلاعات شخصی
+                        </button>
+                        <button class="tab-btn" data-tab="security">
+                            <i class="fas fa-lock"></i> امنیت
+                        </button>
+                    </div>
+                    <!-- تب اطلاعات شخصی -->
+                    <div class="tab-content active" id="infoTab">
+                        <div class="info-form">
+                             <form method="post" novalidate>
+                                {% csrf_token %}
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>نام</label>
+                                    <input type="text" id="firstName" value="مهدی" placeholder="نام">
+                                </div>
+                                <div class="form-group">
+                                    <label>نام خانوادگی</label>
+                                    <input type="text" id="lastName" value="کریمی" placeholder="نام خانوادگی">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>نام کاربری</label>
+                                <input type="text" id="username" value="mehdi.karimi" placeholder="نام کاربری">
+                            </div>
+                            <div class="form-group">
+                                <label>ایمیل</label>
+                                <input type="email" id="email" value="mehdi@example.com"
+                                    placeholder="example@domain.com">
+                            </div>
+                            <div class="form-group">
+                                <label>نام مدرسه</label>
+                                <input type="email" id="email" value="mehdi@example.com"
+                                    placeholder="example@domain.com">
+                            </div>
+                            <div class="form-group">
+                                <label>شماره تماس</label>
+                                <input type="tel" id="phone" value="۰۹۱۲۱۲۳۴۵۶۷" placeholder="۰۹۱۲۱۲۳۴۵۶۷">
+                            </div>
+                            <button class="btn-save" id="saveInfoBtn">
+                                <i class="fas fa-save"></i> ذخیره تغییرات
+                            </button>
+                             </form>
+                        </div>
+                    </div>
+                    <!-- تب امنیت -->
+                    <div class="tab-content" id="securityTab">
+                        <div class="password-section">
+                            <h3><i class="fas fa-key"></i> تغییر رمز عبور</h3>
+                            <div class="form-group">
+                                <label>رمز عبور فعلی</label>
+                                <input type="password" id="currentPassword" placeholder="رمز عبور فعلی را وارد کنید">
+                            </div>
+                            <div class="form-group">
+                                <label>رمز عبور جدید</label>
+                                <input type="password" id="newPassword" placeholder="رمز عبور جدید">
+                            </div>
+                            <div class="form-group">
+                                <label>تکرار رمز عبور جدید</label>
+                                <input type="password" id="confirmPassword"
+                                    placeholder="رمز عبور جدید را دوباره وارد کنید">
+                            </div>
+                            <button class="btn-save" id="changePasswordBtn">
+                                <i class="fas fa-sync-alt"></i> تغییر رمز عبور
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- مودال تغییر آواتار -->
+            <div id="avatarModal" class="modal">
+                <div class="modal-container">
+                    <div class="modal-header">
+                        <h3>تغییر عکس پروفایل</h3>
+                        <button class="modal-close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>آیا می‌خواهید عکس پروفایل خود را تغییر دهید؟</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-cancel">انصراف</button>
+                        <button class="btn-confirm">انتخاب عکس</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="{% static 'js/dashboard.js' %}"></script>
+    <script src="{% static 'js/profile.js' %}"></script>
+</body>
+</html>

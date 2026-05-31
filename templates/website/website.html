@@ -1,0 +1,288 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>سامانه آزمون‌های آنلاین | صفحه اصلی</title>
+    <link rel="stylesheet" href="{% static 'css/website.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="site-container">
+        <!-- هدر با دکمه ورود -->
+        <header class="main-header">
+            <div class="header-container">
+                <div class="logo-area">
+                    <div class="logo-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>سامانه آزمون‌های من</h1>
+                        <span>سامانه پیشرفته برگزاری آزمون آنلاین</span>
+                    </div>
+                </div>
+                {% if not user.is_authenticated %}
+                <div class="header-buttons">
+                    <a href="{% url 'accounts:login' %}" class="my-link" >
+                    <button  class="btn-login" >
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>ورود به پنل کاربری</span>
+                    </button>
+                    </a>
+                </div>
+                {% endif %}
+
+                {% if  user.is_authenticated %}
+                <div class="header-buttons">
+                    <a href="{% url 'dashboard:dashboard' %}" class="my-link" >
+                    <button  class="btn-login" >
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>داشبورد</span>
+                    </button>
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </header>
+
+        <!-- بخش اصلی -->
+        <main class="main-content">
+            <!-- بخش قهرمان (Hero Section) -->
+            <section class="hero-section">
+                <div class="hero-bg-shape"></div>
+                <div class="hero-container">
+                    <div class="hero-text">
+                        <div class="hero-badge">
+                            <i class="fas fa-chalkboard-user"></i>
+                            <span>سامانه آنلاین آزمون‌سازی</span>
+                        </div>
+                        <h1>آزمون‌های خود را<br>حرفه‌ای برگزار کنید</h1>
+                        <p>سامانه جامع برگزاری آزمون‌های آنلاین با امکان طراحی سوالات تشریحی، تستی، صحیح/غلط و نظارت کامل بر عملکرد کاربران</p>
+                        
+                        <div class="hero-buttons">
+                            <button class="btn-primary" id="getStartedBtn">
+                                <i class="fas fa-play"></i>
+                                شروع کنید
+                            </button>
+                            <button class="btn-outline" id="learnMoreBtn">
+                                <i class="fas fa-info-circle"></i>
+                                اطلاعات بیشتر
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-image">
+                        <div class="floating-card card-1">
+                            <i class="fas fa-file-alt"></i>
+                            <span>آزمون تستی</span>
+                        </div>
+                        <div class="floating-card card-2">
+                            <i class="fas fa-table-list"></i>
+                            <span>پاسخنامه هوشمند</span>
+                        </div>
+                        <div class="floating-card card-3">
+                            <i class="fas fa-chart-line"></i>
+                            <span>آمار پیشرفته</span>
+                        </div>
+                        <div class="hero-illustration">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- بخش ویژگی‌ها -->
+            <section class="features-section">
+                <div class="container">
+                    <div class="section-header">
+                        <span class="section-badge">ویژگی‌های منحصر به فرد</span>
+                        <h2>چرا سامانه ما را انتخاب می‌کنید؟</h2>
+                        <p>ابزارهای قدرتمند برای برگزاری آزمون‌های حرفه‌ای</p>
+                    </div>
+                    
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-question-circle"></i>
+                            </div>
+                            <h3>انواع سوالات</h3>
+                            <p>پشتیبانی از سوالات تستی، تشریحی، عددی و صحیح/غلط</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-simple"></i>
+                            </div>
+                            <h3>آمار پیشرفته</h3>
+                            <p>گزارش‌های دقیق از عملکرد شرکت‌کنندگان</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3>امنیت بالا</h3>
+                            <p>محافظت از سوالات و جلوگیری از تقلب</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <h3>مدیریت زمان</h3>
+                            <p>تعیین تایمر برای هر آزمون و ثبت خودکار</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <h3>واکنش‌گرا</h3>
+                            <p>طراحی کاملاً ریسپانسیو برای تمام دستگاه‌ها</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h3>نمایش PDF</h3>
+                            <p>نمایش سوالات به صورت PDF بدون امکان کپی</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- بخش آمار -->
+            <section class="stats-section">
+                <div class="container">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="150">0</div>
+                            <div class="stat-label">آزمون برگزار شده</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="5000">0</div>
+                            <div class="stat-label">شرکت‌کننده فعال</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="98">0%</div>
+                            <div class="stat-label">رضایت کاربران</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="24">0</div>
+                            <div class="stat-label">پشتیبانی شبانه‌روزی</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- بخش CTA -->
+            <section class="cta-section">
+                <div class="container">
+                    <div class="cta-content">
+                        <h2>آماده شروع هستید؟</h2>
+                        <p>همین حالا ثبت‌نام کنید و اولین آزمون خود را برگزار کنید</p>
+                        <div class="cta-buttons">
+                            <button class="btn-cta-primary" id="registerBtn">
+                                <i class="fas fa-user-plus"></i>
+                                ثبت‌نام رایگان
+                            </button>
+                            <button class="btn-cta-secondary" id="demoBtn">
+                                <i class="fas fa-play-circle"></i>
+                                درخواست دمو
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- فوتر -->
+        <footer class="main-footer">
+            <div class="footer-container">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>سامانه آزمون‌های من</span>
+                    </div>
+                    <p>پلتفرم پیشرفته برگزاری آزمون‌های آنلاین با بالاترین کیفیت و امنیت</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>دسترسی سریع</h4>
+                        <ul>
+                            <li><a href="#">صفحه اصلی</a></li>
+                            <li><a href="#">درباره ما</a></li>
+                            <li><a href="#">تماس با ما</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="link-group">
+                        <h4>خدمات</h4>
+                        <ul>
+                            <li><a href="#">طراحی آزمون</a></li>
+                            <li><a href="#">گزارش‌گیری</a></li>
+                            <li><a href="#">پشتیبانی</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="link-group">
+                        <h4>قوانین</h4>
+                        <ul>
+                            <li><a href="#">حریم خصوصی</a></li>
+                            <li><a href="#">شرایط استفاده</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; ۲۰۲۴ سامانه آزمون‌های من - تمامی حقوق محفوظ است</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- مودال ورود -->
+    <div id="loginModal" class="modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3><i class="fas fa-key"></i> ورود به حساب کاربری</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="input-group">
+                        <label><i class="fas fa-envelope"></i> پست الکترونیک</label>
+                        <input type="email" placeholder="example@domain.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label><i class="fas fa-lock"></i> رمز عبور</label>
+                        <input type="password" placeholder="********" required>
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox"> مرا به خاطر بسپار
+                        </label>
+                        <a href="#" class="forgot-link">فراموشی رمز عبور؟</a>
+                    </div>
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-arrow-left"></i>
+                        ورود به سامانه
+                    </button>
+                </form>
+                <div class="modal-footer">
+                    <p>حساب کاربری ندارید؟ <a href="#" id="signupLink">ثبت‌نام کنید</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- اسنک بار برای اعلان‌ها -->
+    <div id="snackbar" class="snackbar"></div>
+
+    <script src="{% static 'js/website.js' %}"></script>
+</body>
+</html>

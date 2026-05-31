@@ -1,0 +1,118 @@
+{% load static %} {% load form_extras %}
+<!doctype html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="remaining-seconds" content="{{ remaining_seconds }}">
+    <meta name="exam-id" content="{{ exam.id }}">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+  <title>صفحه آزمون</title>
+  <link rel="stylesheet" href="{% static 'css/exam.css'%}" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body>
+  <div class="exam-container">
+
+    <div class="exam-main">
+      <!-- راست: نمایش PDF بدون امکان کپی -->
+      <div class="pdf-section">
+        <div class="pdf-viewer-wrapper">
+          <iframe id="pdfFrame" src="{% static 'pdfjs/web/viewer.html' %}?file={{ pdf_url }}" width="100%" height="100%"
+            style="border: none;"></iframe>
+        </div>
+        <div class="pdf-overlay-protection"></div>
+      </div>
+
+      <!-- چپ: پاسخنامه ۳۰ سوالی -->
+      <div class="answers-section">
+        <div class="answers-header">
+          <!-- Method 1: Data attribute -->
+          <h3>پاسخ‌برگ</h3>
+          <div class="timer-container" id="timer" data-remaining-seconds="{{ remaining_seconds }}">
+            Loading...
+          </div>
+
+
+        </div>
+        <form method="post" action="{% url 'exam:exam_view' exam_id=exam.id %}" novalidate id="examForm">
+          {% csrf_token %}
+
+          {% for question in questions %}
+
+          {# ========================= MULTI CHOICE ========================= #}
+          {% if question.question_type == "multi_choice" %}
+          <div class="question-row single-choice" data-qid="{{ question.id }}">
+            <div class="question-number">{{ forloop.counter }}</div>
+            <div class="question-options">
+              {% for letter in "ABCDE" %}
+              <label class="option-label">
+                <input type="radio" name="q{{ question.id }}" value="{{ letter }}" />
+                <span class="option-text">{{ letter }}</span>
+              </label>
+              {% endfor %}
+            </div>
+          </div>
+
+          {# ========================= NUMERIC ========================= #}
+          {% elif question.question_type == "numeric" %}
+          <div class="question-row number-question" data-qid="{{ question.id }}">
+            <div class="question-number">{{ forloop.counter }}</div>
+            <div class="number-answer-wrapper">
+              <input type="number" name="q{{ question.id }}" class="number-answer-input" placeholder="Enter number" />
+            </div>
+          </div>
+
+          {# ========================= TRUE / FALSE GRID ========================= #}
+          {% elif question.question_type == "true_false_set" %}
+          <div class="question-row tf-grid-question" data-qid="{{ question.id }}">
+            <div class="tf-grid-wrapper">
+
+              <!-- TRUE ROW -->
+              <div class="tf-row">
+                {% for col in "12345" %}
+                <label class="tf-cell">
+                  <input type="radio" name="q{{ question.id }}_col{{ col }}" value="T" />
+                  <span class="radio-custom">ص</span>
+                </label>
+                {% endfor %}
+              </div>
+
+              <!-- FALSE ROW -->
+              <div class="tf-row">
+                {% for col in "12345" %}
+                <label class="tf-cell">
+                  <input type="radio" name="q{{ question.id }}_col{{ col }}" value="F" />
+                  <span>غ</span>
+                </label>
+                {% endfor %}
+              </div>
+
+            </div>
+            <div class="question-number">{{ forloop.counter }}</div>
+          </div>
+          {% endif %}
+
+          {% endfor %}
+
+          <button type="submit" class="btn btn-success" id="submitBtn">ثبت</button>
+
+          <!-- مودال تایم اتمام -->
+          <div id="timeoutModal" class="modal hidden">
+            <div class="modal-content">
+              <h2>⏰ زمان آزمون به پایان رسید</h2>
+              <p>پاسخ‌های شما به صورت خودکار ذخیره و ارسال شد.</p>
+              <button id="closeModalBtn">بستن</button>
+            </div>
+          </div>
+<script>
+    // اطمینان از وجود form با id مناسب
+    document.getElementById('examForm') || document.querySelector('form');
+</script>
+          <script src="{% static 'js/exam.js' %}"></script>
+</body>
+
+</html>

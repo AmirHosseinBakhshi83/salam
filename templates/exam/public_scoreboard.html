@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Scoreboard - {{ exam.title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --primary-light: #3b82f6;
+            --secondary: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #0f172a;
+            --gray: #64748b;
+            --gray-light: #94a3b8;
+            --light-gray: #f1f5f9;
+            --white: #ffffff;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+        }
+
+        /* ============================================
+       SCOREBOARD PAGE STYLES - MODERN DASHBOARD
+       ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fc 0%, #eef2f8 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            direction: ltr;
+        }
+
+        /* ========== MAIN CONTAINER ========== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 32px 32px 0px 0px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        /* ========== STATS CARDS ========== */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            padding: 1.5rem;
+            background: var(--light-gray);
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 1.2rem;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid #eef2f8;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .stat-card .label {
+            color: var(--gray);
+            font-size: 0.75rem;
+            margin-top: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ========== USER RANK SECTION ========== */
+        .user-rank {
+            background: linear-gradient(135deg, #fef3c7, #fffbeb);
+            padding: 1rem 1.5rem;
+            border-radius: 16px;
+            font-weight: 700;
+            text-align: center;
+            color: #92400e;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #fde68a;
+        }
+
+        /* ========== CONTROLS SECTION ========== */
+        .controls {
+            padding: 1rem 1.5rem;
+            background: var(--white);
+            border-bottom: 1px solid #eef2f8;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 0.5rem;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-form input {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .search-form input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-form button {
+            padding: 0.6rem 1.2rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .search-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .filters {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filters select,
+        .filters a {
+            padding: 0.6rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            background: var(--white);
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--dark);
+            font-size: 0.85rem;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .filters select:hover,
+        .filters a:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* ========== TABLE STYLES ========== */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: var(--light-gray);
+            color: var(--dark);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        td {
+            padding: 0.9rem 1rem;
+            border-bottom: 1px solid #eef2f8;
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        tr:hover td {
+            background: #fafcff;
+        }
+
+        /* Rank specific styles */
+        .rank-1 {
+            background: linear-gradient(90deg, #fffbeb, transparent);
+        }
+
+        .rank-1 td:first-child {
+            font-weight: 800;
+            color: #d97706;
+            font-size: 1.1rem;
+        }
+
+        .rank-2 {
+            background: linear-gradient(90deg, #f5f5f5, transparent);
+        }
+
+        .rank-2 td:first-child {
+            font-weight: 800;
+            color: #78716c;
+            font-size: 1.1rem;
+        }
+
+        .rank-3 {
+            background: linear-gradient(90deg, #fef3c7, transparent);
+        }
+
+        .rank-3 td:first-child {
+            font-weight: 800;
+            color: #b45309;
+            font-size: 1.1rem;
+        }
+
+        .rank-none {
+            background: var(--light-gray);
+        }
+
+        .rank-none td:first-child {
+            font-weight: 800;
+            color: #6d6d6d;
+            font-size: 1.1rem;
+        }
+
+        /* Username styling */
+        td:nth-child(2) {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* Score styling */
+        td:nth-child(4) {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Percentage styles */
+        .percentage-high {
+            color: #10b981;
+            font-weight: 700;
+            background: #d1fae5;
+            padding: 0.2rem 0.5rem;
+            border-radius: 30px;
+            display: inline-block;
+            font-size: 0.75rem;
+        }
+
+        .percentage-medium {
+            color: #f59e0b;
+            font-weight: 700;
+            background: #fed7aa;
+            padding: 0.2rem 0.5rem;
+            border-radius: 30px;
+            display: inline-block;
+            font-size: 0.75rem;
+        }
+
+        .percentage {
+            color: #001299;
+            font-weight: 700;
+            background: #e6e2fe;
+            padding: 0.2rem 0.5rem;
+            border-radius: 30px;
+            display: inline-block;
+            font-size: 0.75rem;
+        }
+
+        /* ========== PAGINATION ========== */
+        .pagination {
+            padding: 1.2rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            background: var(--white);
+            border-top: 1px solid #eef2f8;
+        }
+
+        .pagination a,
+        .pagination span {
+            padding: 0.4rem 0.8rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .pagination a:hover {
+            background: var(--light-gray);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .pagination .current {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 0.75rem;
+            }
+
+            th,
+            td {
+                padding: 0.6rem 0.4rem;
+            }
+
+            .header h1 {
+                font-size: 1.2rem;
+            }
+
+            .filters {
+                justify-content: center;
+            }
+
+            .search-form {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats {
+                gap: 0.8rem;
+                padding: 1rem;
+            }
+
+            .stat-card .number {
+                font-size: 1.5rem;
+            }
+
+            th {
+                font-size: 0.65rem;
+            }
+
+            td {
+                font-size: 0.7rem;
+                padding: 0.5rem 0.3rem;
+            }
+
+            .pagination a,
+            .pagination span {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>اسکوربورد</h1>
+            <p>{{ exam.title }}</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="number">{{ stats.total|default:0 }}</div>
+                <div class="label">کل شرکت‌کنندگان</div>
+            </div>
+            {% if user_rank %}
+            <div class="stat-card">
+                <div class="number">{{ user_rank }}</div>
+                <div class="label">رتبه شما</div>
+            </div>
+            {% endif %}
+        </div>
+
+
+
+    </div>
+
+    <form id="filter-form" method="get" style="display: none;">
+        <input type="hidden" name="search" value="{{ search|default:'' }}">
+        <input type="hidden" name="top" id="top-input">
+        <input type="hidden" name="limit" id="limit-input">
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th>Name</th>
+                <th>Score</th>
+                <th>Percentage</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in scoreboard %}
+            {% if entry.rank <= 3 %} <tr class="rank-{{ entry.rank|default:'' }}">
+                <td>
+                    {% if entry.rank == 1 %}🥇 {{ entry.rank }}
+                    {% elif entry.rank == 2 %}🥈 {{ entry.rank }}
+                    {% elif entry.rank == 3 %}🥉 {{ entry.rank }}
+                    {% else %}{{ entry.rank }}{% endif %}
+                </td>
+                <td>{{ entry.username }}</td>
+                <td>{{ entry.name|default:"-" }}</td>
+                <td>{{ entry.score|floatformat:2 }}</td>
+                <td>
+                    <span class="percentage">
+                        {{ entry.percentage|floatformat:2 }}%
+                    </span>
+                </td>
+                </tr>
+                {% endif %}
+                {% if entry.rank >= 4 %}
+                <tr class="rank-{{ entry.rank|default:'' }}">
+                    <td>
+                        {{ entry.rank }}
+                    </td>
+                    <td>--------</td>
+                    <td>--------</td>
+                    <td>{{ entry.score|floatformat:2 }}</td>
+                    <td>
+                        <span class="percentage">
+                            {{ entry.percentage|floatformat:2 }}%
+                        </span>
+                    </td>
+                </tr>
+                {% endif %}
+
+                {% empty %}
+                <tr>
+                    <td colspan="7" style="text-align: center; padding: 40px;">
+                        هنوز شرکت‌کننده‌ای این آزمون ندارد!
+                    </td>
+                </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+
+    {% if scoreboard.has_other_pages %}
+    <div class="pagination">
+        {% if scoreboard.has_previous %}
+        <a
+            href="?page=1{% if search %}&search={{ search }}{% endif %}{% if show_top %}&top={{ show_top }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}">«
+            First</a>
+        <a
+            href="?page={{ scoreboard.previous_page_number }}{% if search %}&search={{ search }}{% endif %}{% if show_top %}&top={{ show_top }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}">Previous</a>
+        {% endif %}
+
+        <span class="current">Page {{ scoreboard.number }} of {{ scoreboard.paginator.num_pages }}</span>
+
+        {% if scoreboard.has_next %}
+        <a
+            href="?page={{ scoreboard.next_page_number }}{% if search %}&search={{ search }}{% endif %}{% if show_top %}&top={{ show_top }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}">Next</a>
+        <a
+            href="?page={{ scoreboard.paginator.num_pages }}{% if search %}&search={{ search }}{% endif %}{% if show_top %}&top={{ show_top }}{% endif %}{% if limit %}&limit={{ limit }}{% endif %}">Last
+            »</a>
+        {% endif %}
+    </div>
+    {% endif %}
+    </div>
+
+    <script>
+        // Handle filter form submission
+        document.querySelectorAll('select[name="top"], select[name="limit"]').forEach(select => {
+            select.addEventListener('change', function () {
+                const form = document.getElementById('filter-form');
+                document.getElementById('top-input').value = document.querySelector('select[name="top"]').value;
+                document.getElementById('limit-input').value = document.querySelector('select[name="limit"]').value;
+                form.submit();
+            });
+        });
+    </script>
+</body>
+
+</html>

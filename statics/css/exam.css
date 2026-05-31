@@ -1,0 +1,682 @@
+/* ============================================
+   MAIN STYLE - EXAM SYSTEM HOMEPAGE
+   ============================================ */
+/* Regular weight */
+@font-face {
+    font-family: 'shabnam';
+    src: url('../fonts/shabnam/Shabnam\ Light.ttf' ) format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Bold weight */
+@font-face {
+    font-family: 'shabnam';
+    src: url('../fonts/shabnam/Shabnam\ Bold.ttf' ) format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+    
+}
+
+/* Italic style */
+@font-face {
+    font-family: 'shabnam';
+    src: url('../fonts/shabnam/Shabnam-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    font-family: 'shabnam';
+    font-weight: normal;
+}
+
+body {
+    font-family: 'shabnam';
+    font-weight: normal;
+    background: linear-gradient(135deg, #f5f7fc 0%, #eef2f8 100%);
+    color: #1a2c3e;
+    direction: rtl;
+    overflow-x: hidden;
+}
+
+/* ========== MAIN CONTAINER ========== */
+.exam-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ========== HEADER STYLES - Premium Design ========== */
+.dashboard-header {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-right .logo {
+    font-size: 1.35rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #2563eb, #1e40af, #3b82f6);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    letter-spacing: -0.3px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.user-welcome {
+    color: #5b6e8c;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.user-name-display {
+    font-weight: 700;
+    color: #0f172a;
+    background: linear-gradient(135deg, #f1f5f9, #e9eef5);
+    padding: 0.4rem 1.2rem;
+    border-radius: 40px;
+    font-size: 0.9rem;
+    border: 1px solid rgba(37, 99, 235, 0.15);
+}
+
+.user-info-link-btn {
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    border: 1px solid #e2e8f0;
+    padding: 0.45rem 1.2rem;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #2563eb;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: inherit;
+}
+
+.user-info-link-btn:hover {
+    background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+    border-color: #2563eb;
+}
+
+/* ========== MAIN TWO-COLUMN LAYOUT ========== */
+.exam-main {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 1rem;
+    flex: 1;
+    min-height: calc(100vh - 80px);
+}
+
+/* ========== PDF SECTION - Modern Card ========== */
+.pdf-section {
+    flex: 2.2;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(37, 99, 235, 0.08);
+}
+
+.pdf-section:hover {
+    box-shadow: 0 25px 40px -15px rgba(0, 0, 0, 0.15);
+}
+
+.pdf-viewer-wrapper {
+    width: 100%;
+    height: 100%;
+    min-height: 600px;
+    background: #f8fafc;
+    position: relative;
+}
+
+.pdf-viewer-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 28px;
+}
+
+.pdf-overlay-protection {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* ========== ANSWER SHEET SECTION - Scrollable ========== */
+.answers-section {
+    flex: 0.9;
+    background: #ffffff;
+    border-radius: 28px;
+    box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(37, 99, 235, 0.08);
+    height: calc(100vh - 20px);  /* ارتفاع ثابت بر اساس viewport */
+    position: relative;
+}
+
+
+.answers-header {
+    padding: 1.2rem 1.5rem;
+    background: linear-gradient(135deg, #ffffff, #fafcff);
+    border-bottom: 2px solid #eef2ff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-radius: 28px 28px 0 0;
+}
+
+.answers-header h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+
+.submit-exam-btn {
+    background: linear-gradient(135deg, #10b981, #059669);
+    border: none;
+    padding: 0.6rem 1.4rem;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: inherit;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.submit-exam-btn:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+}
+
+/* ========== SCROLLABLE ANSWER SHEET CONTENT ========== */
+.answers-section form {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 1rem 0;
+    min-height: 0;  /* کلیدی برای flex + overflow */
+}
+
+.question-row:last-child {
+    margin-bottom: 1rem;
+}
+
+
+/* Custom Scrollbar for Answer Sheet */
+.answers-section form::-webkit-scrollbar {
+    width: 6px;
+}
+
+.answers-section form::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+.answers-section form::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #94a3b8, #cbd5e1);
+    border-radius: 10px;
+}
+
+.answers-section form::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+/* ========== QUESTION ROW STYLES ========== */
+.question-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    margin: 0.5rem 1rem;
+    background: #ffffff;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    border: 1px solid #edf2f7;
+}
+
+
+.question-number {
+    font-weight: 700;
+    color: #2563eb;
+    background: #eef2ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-left: 1rem;
+    flex-shrink: 0;
+    width: 32px;  /* کوچک‌تر کردن شماره سوال */
+    height: 32px;
+    font-size: 0.9rem;
+}
+
+/* ========== MULTI CHOICE (5 Options A,B,C,D,E) ========== */
+.question-options {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    flex: 1;
+    justify-content: flex-start;
+}
+
+.option-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.8rem;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-size: 0.8rem;
+    font-weight: 500;
+    flex-direction: column;
+}
+
+.option-text {
+  order: -1; /* Places text before the radio input */
+  margin-bottom: 5px; /* Optional: space between text and radio circle */
+}
+
+.option-label:hover {
+    background: #eef2ff;
+    border-color: #2563eb;
+    transform: scale(1.02);
+}
+
+.option-label input[type="radio"] {
+    accent-color: #2563eb;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.option-label.selected {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    border-color: #2563eb;
+    color: white;
+}
+
+.option-label.selected .option-text {
+    color: white;
+}
+
+.option-text {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #334155;
+}
+
+/* ========== NUMERIC INPUT ========== */
+.number-question {
+    justify-content: space-between;
+}
+
+.number-answer-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.number-answer-input {
+    width: 180px;
+    padding: 0.7rem 1.2rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-family: 'Inter', monospace;
+    text-align: center;
+    transition: all 0.25s ease;
+    background: #f8fafc;
+}
+
+.number-answer-input:focus {
+    outline: none;
+    border-color: #2563eb;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.number-answer-input:hover {
+    border-color: #94a3b8;
+}
+
+/* ========== TRUE/FALSE GRID (5 Columns) ========== */
+.tf-grid-question {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+}
+
+.tf-grid-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    order: 1;
+    overflow-x: auto;  /* اسکرول افقی در صورت نیاز */
+    min-width: 0;  /* برای flexbox */
+}
+
+.tf-row {
+    display: flex;
+    gap: 0.3rem;  /* کاهش فاصله برای زوم */
+    justify-content: flex-start;
+    flex-wrap: wrap;  /* اضافه شدن برای زوم بالا */
+}
+
+.tf-cell {
+    display: inline-flex;  /* تغییر از flex به inline-flex */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 40px;  /* کاهش عرض */
+    padding: 0.3rem 0.3rem;  /* کاهش padding */
+    text-align: center;
+    flex-shrink: 0;  /* جلوگیری از جمع شدن */
+}
+
+.tf-cell:hover {
+    background: #eef2ff;
+}
+
+.tf-cell input[type="radio"] {
+    accent-color: #2563eb;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.tf-cell span {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #475569;
+}
+
+.tf-cell.selected {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+}
+
+.tf-cell.selected span {
+    color: white;
+}
+
+/* ========== FORM SUBMIT BUTTON ========== */
+.btn-success {
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    position: sticky;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 1.5rem;
+    width: calc(100% - 3rem);
+    font-family: inherit;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #1d4ed8, #1e3a8a);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+}
+
+/* ========== MODAL STYLES ========== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 32px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 30px 50px rgba(0, 0, 0, 0.2);
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.timer-container {
+        background: #2c3e50;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 20px;
+        font-weight: bold;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        z-index: 1000;
+        text-align: center;
+    }
+    
+    .timer-warning {
+        background: #e74c3c;
+        animation: pulse 1s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.7; }
+        100% { opacity: 1; }
+    }
+
+.modal-content h2 {
+    color: #dc2626;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+
+
+.modal-content button {
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 40px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* رادیو باتن را مخفی می‌کنیم */
+.custom-radio {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.custom-radio input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    cursor: pointer;
+}
+
+
+/* حالت انتخاب شده */
+.custom-radio input[type="radio"]:checked + .radio-custom {
+    border-color: #2196f3;
+    background-color: #2196f3;
+    box-shadow: inset 0 0 0 4px white;
+}
+
+/* هاور */
+.custom-radio:hover .radio-custom {
+    border-color: #666;
+}
+
+
+.modal-content button:hover {
+    transform: scale(1.05);
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 1100px) {
+    .exam-main {
+        flex-direction: column;
+        padding: 1rem;
+    }
+    
+    .pdf-section {
+        min-height: 500px;
+    }
+    
+    .answers-section {
+        min-height: 500px;
+    }
+    
+    .question-options {
+        gap: 0.5rem;
+    }
+    
+    .option-label {
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-header {
+        padding: 0.8rem 1rem;
+    }
+    
+    .header-right .logo {
+        font-size: 1rem;
+    }
+    
+    .user-name-display {
+        font-size: 0.8rem;
+        padding: 0.3rem 0.8rem;
+    }
+    
+    .question-row {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+    
+    .question-number {
+        margin-bottom: 0.8rem;
+    }
+    
+    .question-options {
+        justify-content: center;
+    }
+    
+    .tf-row {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .tf-cell {
+        min-width: 45px;
+    }
+    
+    .number-answer-wrapper {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .answers-header {
+        flex-direction: column;
+    }
+    
+    .option-label {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.6rem;
+    }
+    
+    .tf-cell {
+        min-width: 40px;
+        padding: 0.3rem 0.5rem;
+    }
+}

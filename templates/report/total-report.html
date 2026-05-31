@@ -1,0 +1,164 @@
+{% extends 'dashboard-main.html' %}
+{% load static %}
+{% block content %}
+<aside class="right-sidebar">
+    <div class="sidebar-menu">
+        <div class="sidebar-menu">
+            <div class="sidebar-item" data-tab="exams">
+                <a href="{% url 'dashboard:dashboard' %}" class="my-link">
+                    <span class="item-text">آزمون‌های من</span>
+                </a>
+            </div>
+
+            <div class="sidebar-item-active" data-tab="results">
+                <a href="{% url 'report:total' %}" class="my-link">
+                    <span class="item-text">کارنامه</span>
+                </a>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <div class="sidebar-item" data-tab="exams">
+                <a href="{% url 'personal:profile' %}" class="my-link">
+                    <span class="item-text">پروفایل</span>
+                </a>
+            </div>
+
+            <div class="sidebar-item" data-tab="results">
+                <a href="{% url 'dashboard:dashboard' %}" class="my-link">
+                    <span class="item-text">راهنما</span>
+                </a>
+            </div>
+        </div>
+        <!-- آمار کاربر در سایدبار -->
+        <div class="sidebar-stats">
+            <div class="stat-card">
+                <i class="fas fa-check-circle"></i>
+                <div class="stat-info">
+                    <span class="stat-value" id="completedExams">0</span>
+                    <span class="stat-label">آزمون کامل شده</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-hourglass-half"></i>
+                <div class="stat-info">
+                    <span class="stat-value" id="pendingExams">0</span>
+                    <span class="stat-label">در انتظار</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-star"></i>
+                <div class="stat-info">
+                    <span class="stat-value" id="avgScore">0</span>
+                    <span class="stat-label">میانگین نمره</span>
+                </div>
+            </div>
+        </div>
+</aside>
+<main class="content-area">
+    <div id="examsTab" class="tab-content active">
+        <div class="exams-header">
+            <div class="header-title">
+                <h3><i class="fas fa-list-check"></i> لیست کارنامه‌های من</h3>
+                <p class="exams-subtitle">مشاهده عملکرد و نمرات شما در آزمون‌ها</p>
+            </div>
+            <div class="header-actions">
+                            <form method="get" class="search-form">
+                                <div class="search-box">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" name="search" placeholder="جستجوی آزمون..."
+                                        value="{{ search_query }}" />
+                                </div>
+                            </form>
+                        </div>
+                        
+        </div>
+
+
+        <!-- آمار کلی -->
+        <div class="results-stats">
+            <div class="result-card">
+                <div class="result-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="result-info">
+                    <span class="result-label">بهترین نمره</span>
+                    <span class="result-value">{{ best_score|default:"--" }}</span>
+                </div>
+            </div>
+            <div class="result-card">
+                <div class="result-icon">
+                    <i class="fas fa-chart-simple"></i>
+                </div>
+                <div class="result-info">
+                    <span class="result-label">میانگین نمرات</span>
+                    <span class="result-value">{{ avg_score|default:"--" }}</span>
+                </div>
+            </div>
+            <div class="result-card">
+                <div class="result-icon">
+                    <i class="fas fa-percent"></i>
+                </div>
+                <div class="result-info">
+                    <span class="result-label">درصد قبولی</span>
+                    <span class="result-value">{{ pass_percentage|default:"0" }}%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- جدول نتایج -->
+        <div class="results-table-wrapper">
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>نام آزمون</th>
+                        <th>تاریخ شرکت</th>
+                        <th>نمره</th>
+                        <th>درصد</th>
+                        <th>وضعیت</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if user_exams %}
+                    {% for result in user_exams %}
+                    {% if result.is_completed %}
+                    <tr>
+                        <td>{{ result.exam.title }}</td>
+                        <td>{{ result.started_date|date:"Y/m/d" }}</td>
+                        <td class="score-value">{{ result.score }}</td>
+                        <td>
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                                <span class="progress-text">{{ result.percentage_score }}%</span>
+                            </div>
+                        </td>
+                        <td>
+
+                            <span class="status-badge status-passed">کامل شده</span>
+                            <!-- <span class="status-badge status-failed">✗ رد</span> 
+                                 -->
+                        </td>
+                        <td>
+                            <a href="{% url 'report:single' pid=result.id %}" class="btn-view">
+                                مشاهده جزئیات
+                            </a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="no-data">
+                            <i class="fas fa-chart-line"></i>
+                            <p>هیچ نتیجه‌ای یافت نشد</p>
+                            <small>پس از شرکت در آزمون‌ها، نتایج شما در اینجا نمایش داده می‌شود</small>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
