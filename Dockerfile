@@ -1,32 +1,47 @@
-# Use the official Python runtime image
-FROM python:3.11  
+# ── build stage: install dependencies ──────────────────────────────────────
+FROM python:3.12-slim AS builder
 
-# Create the app directory
-RUN mkdir /app
-
-# Set the working directory inside the container
 WORKDIR /app
 
-# Set environment variables 
-# Prevents Python from writing pyc files to disk
-ENV PYTHONDONTWRITEBYTECODE=1
-#Prevents Python from buffering stdout and stderr
-ENV PYTHONUNBUFFERED=1 
+# System deps needed to compile some Python packages
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Upgrade pip
-RUN pip install --upgrade pip 
+COPY requirements.txt .
+RUN pip install --upgrade pip \
+    && pip wheel --no-cache-dir --wheel-dir /wheels -r requirements.txt
 
-# Copy the Django project  and install dependencies
-COPY requirements.txt  /app/
 
-# run this command to install all dependencies 
-RUN pip install --no-cache-dir -r requirements.txt
+# ── runtime stage: lean final image ────────────────────────────────────────
+FROM python:3.12-slim
 
-# Copy the Django project to the container
-COPY . /app/
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
 
-# Expose the Django port
+WORKDIR /app
+
+# Only the runtime lib (libpq), not the compiler
+RUN apt-get update && apt-get install -y --no-install-recommends libpq5 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install wheels built in previous stage
+COPY --from=builder /wheels /wheels
+RUN pip install --no-cache-dir --no-index --find-links /wheels /wheels/*.whl
+
+# Copy source
+COPY . .
+
+# Collect static files at build time
+RUN python manage.py collectstatic --noinput
+
+# Non-root user for security
+RUN addgroup --system django && adduser --system --ingroup django django
+USER django
+
 EXPOSE 8000
 
-# Run Django’s development server
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["gunicorn", "myproject.wsgi:application", \
+     "--bind", "0.0.0.0:8000", \
+     "--workers", "4", \
+     "--timeout", "60"]
